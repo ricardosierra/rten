@@ -904,6 +904,9 @@ impl<'mb, 'a> GraphBuilder<'mb, 'a> {
                     CoordTransformMode::PytorchHalfPixel => {
                         sg::CoordTransformMode::PytorchHalfPixel
                     }
+                    CoordTransformMode::TfHalfPixelForNn => {
+                        sg::CoordTransformMode::TfHalfPixelForNn
+                    }
                 };
                 let nearest_mode = match args.nearest_mode {
                     NearestMode::Ceil => sg::NearestMode::Ceil,

@@ -190,6 +190,7 @@ enum CoordTransformMode: ubyte {
   Asymmetric,
   AlignCorners,
   PytorchHalfPixel,
+  TfHalfPixelForNn,
 }
 
 // Rounding modes supported by Resize operator when `ResizeMode` is `Nearest`.
