@@ -1001,6 +1001,7 @@ impl_read_op!(Resize, attrs_as_resize_attrs, |attrs: sg::ResizeAttrs| {
         sg::CoordTransformMode::HalfPixel => CoordTransformMode::HalfPixel,
         sg::CoordTransformMode::AlignCorners => CoordTransformMode::AlignCorners,
         sg::CoordTransformMode::PytorchHalfPixel => CoordTransformMode::PytorchHalfPixel,
+        sg::CoordTransformMode::TfHalfPixelForNn => CoordTransformMode::TfHalfPixelForNn,
         _ => CoordTransformMode::default(),
     };
 

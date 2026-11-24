@@ -956,17 +956,18 @@ pub const ENUM_MIN_COORD_TRANSFORM_MODE: u8 = 0;
     since = "2.0.0",
     note = "Use associated constants instead. This will no longer be generated in 2021."
 )]
-pub const ENUM_MAX_COORD_TRANSFORM_MODE: u8 = 3;
+pub const ENUM_MAX_COORD_TRANSFORM_MODE: u8 = 4;
 #[deprecated(
     since = "2.0.0",
     note = "Use associated constants instead. This will no longer be generated in 2021."
 )]
 #[allow(non_camel_case_types)]
-pub const ENUM_VALUES_COORD_TRANSFORM_MODE: [CoordTransformMode; 4] = [
+pub const ENUM_VALUES_COORD_TRANSFORM_MODE: [CoordTransformMode; 5] = [
     CoordTransformMode::HalfPixel,
     CoordTransformMode::Asymmetric,
     CoordTransformMode::AlignCorners,
     CoordTransformMode::PytorchHalfPixel,
+    CoordTransformMode::TfHalfPixelForNn,
 ];
 
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
@@ -978,14 +979,16 @@ impl CoordTransformMode {
     pub const Asymmetric: Self = Self(1);
     pub const AlignCorners: Self = Self(2);
     pub const PytorchHalfPixel: Self = Self(3);
+    pub const TfHalfPixelForNn: Self = Self(4);
 
     pub const ENUM_MIN: u8 = 0;
-    pub const ENUM_MAX: u8 = 3;
+    pub const ENUM_MAX: u8 = 4;
     pub const ENUM_VALUES: &'static [Self] = &[
         Self::HalfPixel,
         Self::Asymmetric,
         Self::AlignCorners,
         Self::PytorchHalfPixel,
+        Self::TfHalfPixelForNn,
     ];
     /// Returns the variant's name or "" if unknown.
     pub fn variant_name(self) -> Option<&'static str> {
@@ -994,6 +997,7 @@ impl CoordTransformMode {
             Self::Asymmetric => Some("Asymmetric"),
             Self::AlignCorners => Some("AlignCorners"),
             Self::PytorchHalfPixel => Some("PytorchHalfPixel"),
+            Self::TfHalfPixelForNn => Some("TfHalfPixelForNn"),
             _ => None,
         }
     }

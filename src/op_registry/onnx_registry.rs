@@ -1864,6 +1864,7 @@ impl_read_op!(Resize, |attrs: &Attrs| {
                 "half_pixel" => Some(CoordTransformMode::HalfPixel),
                 "align_corners" => Some(CoordTransformMode::AlignCorners),
                 "pytorch_half_pixel" => Some(CoordTransformMode::PytorchHalfPixel),
+                "tf_half_pixel_for_nn" => Some(CoordTransformMode::TfHalfPixelForNn),
                 _ => None,
             })
         })

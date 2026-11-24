@@ -55,6 +55,7 @@ fn input_coord(
     match mode {
         Ctm::HalfPixel => scale * (dest_coord as f32 + 0.5) - 0.5,
         Ctm::Asymmetric => scale * dest_coord as f32,
+        Ctm::TfHalfPixelForNn => scale * (dest_coord as f32 + 0.5),
         Ctm::AlignCorners => {
             if length_resized > 1 {
                 dest_coord as f32 * (length_original - 1) as f32 / (length_resized - 1) as f32
@@ -99,6 +100,9 @@ pub enum CoordTransformMode {
     Asymmetric,
     AlignCorners,
     PytorchHalfPixel,
+    /// Like `HalfPixel` but without the -0.5 offset. Used by models converted
+    /// from TensorFlow with nearest resizing.
+    TfHalfPixelForNn,
 }
 
 const CHAN_GROUP_SIZE: usize = 4;
@@ -829,6 +833,29 @@ mod tests {
 
             expect_equal(&result, &case.expected).unwrap();
         })
+    }
+
+    #[test]
+    fn test_resize_nearest_tf_half_pixel_for_nn() {
+        // Matches the ONNX backend test
+        // `test_resize_downsample_sizes_nearest_tf_half_pixel_for_nn`.
+        let pool = BufferPool::new();
+        let image = Tensor::from_data(
+            &[1, 1, 4, 4],
+            (1..=16).map(|x| x as f32).collect::<Vec<_>>(),
+        );
+        let sizes = NdTensor::from([1, 1, 3, 2]);
+        let result = resize(
+            &pool,
+            image.view(),
+            ResizeTarget::Sizes(sizes.view()),
+            ResizeMode::Nearest,
+            CoordTransformMode::TfHalfPixelForNn,
+            NearestMode::RoundPreferFloor,
+        )
+        .unwrap();
+        let expected = Tensor::from_data(&[1, 1, 3, 2], vec![6., 8., 10., 12., 14., 16.]);
+        expect_equal(&result, &expected).unwrap();
     }
 
     #[test]

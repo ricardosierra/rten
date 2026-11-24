@@ -177,6 +177,7 @@ class CoordTransformMode(object):
     Asymmetric = 1
     AlignCorners = 2
     PytorchHalfPixel = 3
+    TfHalfPixelForNn = 4
 
 
 class NearestMode(object):
